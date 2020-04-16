@@ -1,4 +1,4 @@
-# Docker web
+# web
 Sitio web corriendo  en su totalidad sobre Docker a partir de los siguientes contenedores:
 
 nginx: https://hub.docker.com/_/nginx
