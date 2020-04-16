@@ -18,15 +18,11 @@ services:
   letsencrypt:
     image: jrcs/letsencrypt-nginx-proxy-companion
     restart: always
-    environment:
-      - NGINX_RPOXY_CONTAINER=nginx-proxy
     volumes:
       - /root/git/sitio/certs:/etc/nginx/certs:rw
       - /root/git/sitio/vhostd:/etc/nginx/vhost.d
       - /root/git/sitio/www:/usr/share/nginx/html
       - /var/run/docker.sock:/var/run/docker.sock:ro
-   #volumes_from:
-     #- nginx-proxy:rw
 
   www:
     image: nginx
@@ -39,5 +35,3 @@ services:
       - VIRTUAL_HOST=volpini.com.ar,www.volpini.com.ar
       - LETSENCRYPT_HOST=volpini.com.ar,www.volpini.com.ar
       - LETSENCRYPT_EMAIL=volpinibruno@gmail.com
-
-
