@@ -36,22 +36,26 @@ services:
       - LETSENCRYPT_HOST=volpini.com.ar,www.volpini.com.ar
       - LETSENCRYPT_EMAIL=volpinibruno@gmail.com
 
-  mailserver: 
-    image: analogic/poste.io
-    restart: always
-    ports:
-      - "25:25"
-      - "110:110"
-      - "143:143"
-      - "587:587"
-      - "993:993"
-      - "995:995"
-      - "4190:4190"
-    environment:
-      - LETSENCRYPT_EMAIL=volpinibruno@gmail.com
-      - LETSENCRYPT_HOST=mail.volpini.com.ar
-      - VIRTUAL_HOST=mail.volpini.com.ar
-      - HTTPS=OFF
-    volumes:
-      - /root/git/nginx-proxy/data:/data
-
+        #########################################
+        #  Descomentar para activar MailServer  #
+        #########################################        
+        
+        #  mailserver: 
+        #    image: analogic/poste.io
+        #    restart: always
+        #    ports:
+        #      - "25:25"
+        #      - "110:110"
+        #      - "143:143"
+        #      - "587:587"
+        #      - "993:993"
+        #      - "995:995"
+        #      - "4190:4190"
+        #    environment:
+        #      - LETSENCRYPT_EMAIL=volpinibruno@gmail.com
+        #      - LETSENCRYPT_HOST=mail.volpini.com.ar
+        #      - VIRTUAL_HOST=mail.volpini.com.ar
+        #      - HTTPS=OFF
+        #    volumes:
+        #      - /root/git/nginx-proxy/data:/data
+        #
