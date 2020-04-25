@@ -9,9 +9,9 @@ services:
       - "443:443"
     volumes: 
       - /var/run/docker.sock:/tmp/docker.sock:ro
-      - /root/git/sitio/certs:/etc/nginx/certs:ro
-      - /root/git/sitio/vhostd:/etc/nginx/vhost.d
-      - /root/git/sitio/www:/usr/share/nginx/html
+      - /root/git/nginx-proxy/certs:/etc/nginx/certs:ro
+      - /root/git/nginx-proxy/vhostd:/etc/nginx/vhost.d
+      - /root/git/nginx-proxy/www:/usr/share/nginx/html
     labels:
       - com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy
 
@@ -19,9 +19,9 @@ services:
     image: jrcs/letsencrypt-nginx-proxy-companion
     restart: always
     volumes:
-      - /root/git/sitio/certs:/etc/nginx/certs:rw
-      - /root/git/sitio/vhostd:/etc/nginx/vhost.d
-      - /root/git/sitio/www:/usr/share/nginx/html
+      - /root/git/nginx-proxy/certs:/etc/nginx/certs:rw
+      - /root/git/nginx-proxy/vhostd:/etc/nginx/vhost.d
+      - /root/git/nginx-proxy/www:/usr/share/nginx/html
       - /var/run/docker.sock:/var/run/docker.sock:ro
 
   www:
@@ -30,8 +30,28 @@ services:
     expose:
       - "80"
     volumes:
-      - /root/git/sitio/www:/usr/share/nginx/html:ro
+      - /root/git/nginx-proxy/www:/usr/share/nginx/html:ro
     environment:
       - VIRTUAL_HOST=volpini.com.ar,www.volpini.com.ar
       - LETSENCRYPT_HOST=volpini.com.ar,www.volpini.com.ar
       - LETSENCRYPT_EMAIL=volpinibruno@gmail.com
+
+  mailserver: 
+    image: analogic/poste.io
+    restart: always
+    ports:
+      - "25:25"
+      - "110:110"
+      - "143:143"
+      - "587:587"
+      - "993:993"
+      - "995:995"
+      - "4190:4190"
+    environment:
+      - LETSENCRYPT_EMAIL=volpinibruno@gmail.com
+      - LETSENCRYPT_HOST=mail.volpini.com.ar
+      - VIRTUAL_HOST=mail.volpini.com.ar
+      - HTTPS=OFF
+    volumes:
+      - /root/git/nginx-proxy/data:/data
+
